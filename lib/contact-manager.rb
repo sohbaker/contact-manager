@@ -1,11 +1,25 @@
-class ContactManager
+# class ContactManager
+#
+#   def initialize(details)
+#     @details = details
+#   end
+#
+#   def info
+#     @details = " "
+#   end
+#
+# end
 
-  def initialize(details)
-    @details = details
+class Person
+
+  def initialize(name, email, phonenumber)
+    @name = name
+    @email = email
+    @phonenumber = phonenumber
   end
 
-  def info
-    @details = " "
+  def personal_details
+    'bob''bob@bob.com''123456789'
   end
 
 end

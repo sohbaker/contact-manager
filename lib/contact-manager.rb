@@ -5,7 +5,7 @@ class ContactManager
   end
 
   def info
-    @details = "bob"
+    @details = " "
   end
 
 end

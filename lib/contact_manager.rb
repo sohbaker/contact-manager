@@ -1,7 +1,7 @@
 class ContactManager
   require 'person'
 
-  attr_reader :store_entries
+  attr_reader :store_entries, :first_name, :surname, :email, :phonenumber
 
   def initialize
     @store_entries = []
@@ -25,7 +25,11 @@ class ContactManager
     @sorted_list = @store_entries.sort_by { |fn, ln, em, pn | fn[:fname]}
   end
 
-  def greet_user
-
+  def search_phonebook
+    puts "What is the first name of the person you like to find?"
+    search_for = $stdin.gets.chomp
+    
+    find_contact = @store_entries.find_all { |y| y[:fname] == "#{search_for}"}
+    p find_contact
   end
 end

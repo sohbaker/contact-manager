@@ -7,7 +7,8 @@ RSpec.describe Person do
   info = new_contact.phonebook_entry
 
   expect(info).to eq({:fname => 'bob', :sname => 'jones', :email_address => 'bob@bob.com', :telephone => '123456789'})
-  end
+  e
+
 
   # it 'returns a certain set of requested details' do
   #   new_contact = Person.new('bob', 'jones', 'bob@bob.com', '123456789')

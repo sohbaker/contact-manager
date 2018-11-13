@@ -19,7 +19,7 @@ RSpec.describe ContactManager do
    expect(new_contact.store_entries).to eq([{:fname => 'Shivs', :sname => 'B', :email_address => 'sio@bhan.com', :telephone => '123456789'}])
   end
 
-  it 'return details of multiple contacts' do
+  it 'returns details of multiple contacts' do
    allow($stdin).to receive(:gets).and_return("Shivs", "B", "sio@bhan.com", "123456789", "Jeff", "J", "jeff@rey.com", "987654321")
    new_contact = ContactManager.new
 
@@ -27,5 +27,15 @@ RSpec.describe ContactManager do
    new_contact.add_to_phonebook
 
    expect(new_contact.store_entries).to eq([{:fname => 'Shivs', :sname => 'B', :email_address => 'sio@bhan.com', :telephone => '123456789'}, {:fname => 'Jeff', :sname => 'J', :email_address => 'jeff@rey.com', :telephone => '987654321'}])
+  end
+
+  it 'rsorts contacts alphabetically' do
+   allow($stdin).to receive(:gets).and_return("Shivs", "B", "sio@bhan.com", "123456789", "Jeff", "J", "jeff@rey.com", "987654321")
+   new_contact = ContactManager.new
+
+   new_contact.add_to_phonebook
+   new_contact.add_to_phonebook
+
+   expect(new_contact.alphabetise).to eq([{:fname => 'Jeff', :sname => 'J', :email_address => 'jeff@rey.com', :telephone => '987654321'}, {:fname => 'Shivs', :sname => 'B', :email_address => 'sio@bhan.com', :telephone => '123456789'}])
   end
 end

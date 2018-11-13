@@ -21,6 +21,10 @@ class ContactManager
     @store_entries.push(new_person.phonebook_entry)
   end
 
+  def alphabetise
+    @sorted_list = @store_entries.sort_by { |fn, ln, em, pn | fn[:fname]}
+  end
+
   def greet_user
 
   end

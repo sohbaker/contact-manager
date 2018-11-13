@@ -6,10 +6,6 @@ class Person
     @surname = s_name
     @email = email
     @phonenumber = phonenumber
-    # @storename = []
-    # @storeemail = []
-    # @storephone = []
-    # @storedetails = []
   end
 
   def add_name(first_name, last_name)
@@ -34,9 +30,4 @@ class Person
     }
   end
 
-  # def return_details()
-  #   p @storedetails[1]
-  #   p @storedetails[2]
-  #   return "#{@storedetails[3..5]}"
-  # end
 end

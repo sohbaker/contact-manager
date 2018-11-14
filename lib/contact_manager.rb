@@ -1,47 +1,66 @@
 class ContactManager
-  require 'person'
-  require 'json'
+  require 'manage_phonebook'
 
-  attr_reader :log_to_phonebook, :search, :json_data, :find_contact, :store
+  attr_reader :options_menu, :phonebook
 
-  def initialize
-    @json_data = File.read('/Users/siobhanbaker/Documents/TDD/contact-manager/lib/contacts.json')
-    @search = JSON.parse(@json_data, {:symbolize_names => true})
-    @log_to_phonebook = []
+  @phonebook = ManagePhonebook.new()
+
+  def greet_user
+    print "Welcome to you Contact Manager, a command line program which allows you to store, search and view your contacts\nYou can choose to: \n\u2460 add a new contact \n\u2461 view all your contacts, listed alphabetically \n\u2462 search for a contact, or \n\u2463 exit this program"
+
+    use_the_phonebook()
   end
 
-  def add_to_phonebook
-    @load_data = JSON.load(@json_data)
+  def use_the_phonebook
+    print "Would you like to: (1)add a contact, (2)view your contacts, (3)search or (4)exit?\n> "
+    @user_response = gets.chomp
 
-    puts "What is your first name?"
-    first_name = $stdin.gets.chomp
-    puts "What is your surname?"
-    last_name = $stdin.gets.chomp
-    puts "What is your email address?"
-    email = $stdin.gets.chomp
-    puts "What is your contact telephone number?"
-    phone = $stdin.gets.chomp
+    while user_exits_program() == false
+      if @user_response == "1"
+        option_add_contact()
+      elsif @user_response == "2"
+        option_view_contacts()
+      elsif @user_response == "3"
+        option_search()
+      end
+    end
 
-    new_person = Person.new(first_name, last_name, email, phone)
-    @log_to_phonebook << (new_person.phonebook_entry)
-    @load_data << (new_person.phonebook_entry)
-
-    File.write('/Users/siobhanbaker/Documents/TDD/contact-manager/lib/contacts.json', @load_data.to_json)
-
-    p log_to_phonebook
-
+    if user_exits_program() == true
+      exit(0)
+    end
   end
 
-  def alphabetise
-    @sorted_list = @search.sort_by { |fn, ln, em, p| fn[:fname]}
-    return @sorted_list
+  def option_add_contact
+    print "What is the person's first name?\n> "
+    first_name = gets.chomp
+    print "What is the person's surname?\n> "
+    last_name = gets.chomp
+    print "What is the person's email address?\n> "
+    email = gets.chomp
+    print "What is the person's contact telephone number?\n> "
+    phone = gets.chomp
+
+    @phonebook.add_to_phonebook(first_name, last_name, email, phone)
+    return use_the_phonebook()
   end
 
-  def search_phonebook
+  def option_view_contacts
+    @phonebook.alphabetise_contacts()
+    return use_the_phonebook()
+  end
+
+  def option_search
     puts "What is the first name of the person you like to find?"
-    search_for = $stdin.gets.chomp
+    search_for = gets.chomp
 
-    @find_contact = @log_to_phonebook.find_all { |y| y[:fname] == "#{search_for}"}
-    p @find_contact
+    @phonebook.search_phonebook(search_for)
+    return use_the_phonebook()
+  end
+
+  def user_exits_program
+    @user_response.include?('4') == true
   end
 end
+
+contact_manager = ContactManager.new
+contact_manager.greet_user

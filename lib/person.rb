@@ -1,8 +1,6 @@
 class Person
   attr_reader :first_name, :surname, :email, :phonenumber
 
-  require 'json'
-
   def initialize(f_name, s_name, email, phonenumber)
     @first_name = f_name
     @surname = s_name

@@ -9,5 +9,5 @@ Core features
 
 Stretch Goals
 
-- Save the contacts to a file
-- Load the contacts from that file when restarting the program
+- Save the contacts to a file - achieved
+- Load the contacts from that file when restarting the program - achieved

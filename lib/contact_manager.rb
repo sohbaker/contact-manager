@@ -1,7 +1,7 @@
 class ContactManager
   require 'manage_phonebook'
 
-  attr_reader :options_menu, :phonebook
+  attr_reader :options_menu, :phonebook, :email, :phone
 
   @@manage_phonebook = ManagePhonebook.new()
 
@@ -35,11 +35,31 @@ class ContactManager
     print "What is the person's surname?\n> "
     last_name = gets.chomp
     print "What is the person's email address?\n> "
-    email = gets.chomp
-    print "What is the person's contact telephone number?\n> "
-    phone = gets.chomp
+    @email = gets.chomp
+      @check_email = @email.chars
+      @is_valid_email = @check_email.include?("@")
 
-    @@manage_phonebook.add_to_phonebook(first_name, last_name, email, phone)
+      while @is_valid_email == false
+        print "Please enter a valid email address\n> "
+        @email = gets.chomp
+        @check_email = @email.chars
+        @is_valid_email = @check_email.include?("@")
+        break if @is_valid_email == true
+      end
+    print "What is the person's contact telephone number?\n> "
+    @phone = gets.chomp
+      @check_phone = @phone.chars
+      @is_valid_phone_no = @check_phone[0] == "0" && @check_phone[1] == "7" && @check_phone.length == 11
+
+      while @is_valid_phone_no == false
+        print "Please enter a valid phone number\n> "
+        @phone = gets.chomp
+        @check_phone = @phone.chars
+        @is_valid_phone_no = @check_phone[0] == "0" && @check_phone[1] == "7" && @check_phone.length == 11
+        break if @is_valid_phone_no == true
+      end
+
+    @@manage_phonebook.add_to_phonebook(first_name, last_name, @email, @phone)
     print "contact added\n"
     return use_the_phonebook()
   end
@@ -63,6 +83,7 @@ class ContactManager
   def user_exits_program
     @user_response.include?('4') == true
   end
+
 end
 
 contact_manager = ContactManager.new

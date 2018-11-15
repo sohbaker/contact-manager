@@ -6,7 +6,7 @@ class ContactManager
   @@manage_phonebook = ManagePhonebook.new()
 
   def greet_user
-    print "Welcome to you Contact Manager, a command line program which allows you to store, search and view your contacts\nYou can choose to: \n\u2460 add a new contact \n\u2461 view all your contacts, listed alphabetically \n\u2462 search for a contact, or \n\u2463 exit this program\n"
+    print "Welcome to your Contact Manager, a command line program which allows you to store, search and view your contacts.\nYou can choose to: \n\u2460 add a new contact \n\u2461 view all your contacts, listed alphabetically \n\u2462 search for a contact, or \n\u2463 exit this program\n"
     use_the_phonebook()
   end
 

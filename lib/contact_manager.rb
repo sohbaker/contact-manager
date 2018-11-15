@@ -3,10 +3,10 @@ class ContactManager
 
   attr_reader :options_menu, :phonebook
 
-  @phonebook = ManagePhonebook.new()
+  @@manage_phonebook = ManagePhonebook.new()
 
   def greet_user
-    print "Welcome to you Contact Manager, a command line program which allows you to store, search and view your contacts\nYou can choose to: \n\u2460 add a new contact \n\u2461 view all your contacts, listed alphabetically \n\u2462 search for a contact, or \n\u2463 exit this program"
+    print "Welcome to you Contact Manager, a command line program which allows you to store, search and view your contacts\nYou can choose to: \n\u2460 add a new contact \n\u2461 view all your contacts, listed alphabetically \n\u2462 search for a contact, or \n\u2463 exit this program\n"
 
     use_the_phonebook()
   end
@@ -40,21 +40,26 @@ class ContactManager
     print "What is the person's contact telephone number?\n> "
     phone = gets.chomp
 
-    @phonebook.add_to_phonebook(first_name, last_name, email, phone)
+    @@manage_phonebook.add_to_phonebook(first_name, last_name, email, phone)
+    print "contact added\n"
     return use_the_phonebook()
   end
 
   def option_view_contacts
-    @phonebook.alphabetise_contacts()
-    return use_the_phonebook()
+    # @@manage_phonebook.alphabetise_contacts()
+    print @@manage_phonebook.alphabetise_contacts()
+    print "\n"
+    print use_the_phonebook()
   end
 
   def option_search
     puts "What is the first name of the person you like to find?"
     search_for = gets.chomp
 
-    @phonebook.search_phonebook(search_for)
-    return use_the_phonebook()
+    @@manage_phonebook.search_phonebook(search_for)
+    print @@manage_phonebook.search_phonebook(search_for)
+    print "\n"
+    print use_the_phonebook()
   end
 
   def user_exits_program

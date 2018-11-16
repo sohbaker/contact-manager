@@ -6,8 +6,7 @@ class ManagePhonebook
   attr_reader :log_to_phonebook, :search, :json_data, :find_contact, :store
 
   def initialize
-    @json_data = File.read('./lib/contacts.json')
-    @search = JSON.parse(@json_data, {:symbolize_names => true})
+    refresh_data
     @log_to_phonebook = []
   end
 
@@ -22,12 +21,21 @@ class ManagePhonebook
   end
 
   def alphabetise_contacts
+    refresh_data
     @sorted_list = @search.sort_by { |fn, ln, em, p| fn[:fname]}
     return @sorted_list
   end
 
   def search_phonebook(search_for)
+    refresh_data
     @find_contact = @search.find_all { |y| y[:fname] == "#{search_for}"}
     return @find_contact.to_s
+  end
+
+  private # available within the class, but other classes can't see it 
+
+  def refresh_data # can be called a helper method (is helping you to use less code)
+    @json_data = File.read('./lib/contacts.json')
+    @search = JSON.parse(@json_data, {:symbolize_names => true})
   end
 end

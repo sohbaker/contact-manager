@@ -8,20 +8,22 @@ class ContactManager
   end
 
   def greet_user
-    print "Welcome to your Contact Manager, a command line program which allows you to store, search and view your contacts.\nYou can choose to: \n\u2460 add a new contact \n\u2461 view all your contacts, listed alphabetically \n\u2462 search for a contact, or \n\u2463 exit this program\n"
+    print "Welcome to your Contact Manager, a command line program which allows you to store, search and view your contacts.\nYou can choose to:\n\u2460 add a new contact\n\u2461 delete a contact\n\u2462  view all your contacts, listed alphabetically\n\u2463 search for a contact, or\n\u2464 exit this program\n"
     use_the_phonebook()
   end
 
   def use_the_phonebook
-    print "Would you like to: (1)add a contact, (2)view your contacts, (3)search or (4)exit?\n> "
+    print "Would you like to: (1)add a contact, (2)delete a contact, (3)view your contacts, (4)search, or (5)exit?\n> "
     @user_response = gets.chomp
 
     while user_exits_program() == false
       if @user_response == "1"
         option_add_contact()
       elsif @user_response == "2"
-        option_view_contacts()
+        option_delete_a_contact()
       elsif @user_response == "3"
+        option_view_contacts()
+      elsif @user_response == "4"
         option_search()
       end
     end
@@ -39,7 +41,7 @@ class ContactManager
     print "What is the person's email address?\n> "
     @email = gets.chomp
       @check_email = @email.chars
-      @valid_email = @check_email.include?("@")
+      @is_valid_email = @check_email.include?("@")
 
       while @is_valid_email == false
         print "Please enter a valid email address\n> "
@@ -66,6 +68,16 @@ class ContactManager
     print use_the_phonebook()
   end
 
+  def option_delete_a_contact
+    puts "What is the first name of the person whose details you like to delete?"
+    delete = gets.chomp
+
+    @manage_phonebook.delete_contact(delete)
+    print @manage_phonebook.delete_contact(delete)
+    print "\n"
+    print use_the_phonebook()
+  end
+
   def option_view_contacts
     print @manage_phonebook.alphabetise_contacts()
     print "\n"
@@ -83,7 +95,7 @@ class ContactManager
   end
 
   def user_exits_program
-    @user_response.include?('4') == true
+    @user_response.include?('5') == true
   end
 
 end

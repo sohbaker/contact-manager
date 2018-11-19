@@ -11,3 +11,11 @@ Stretch Goals
 
 - Save the contacts to a file - achieved
 - Load the contacts from that file when restarting the program - achieved
+
+Stretch Stretch Goals
+
+- Keep the UI static (i.e. experiment with clear screen to keep the UI in one place)
+- Make the UI more colourful
+- Edit / Delete contact details
+- Search as you type
+- Store and load the data using Postgres

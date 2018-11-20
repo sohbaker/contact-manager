@@ -66,13 +66,13 @@ class ManagePhonebook
     load_JSON_file
 
     p "This is the hash before the data is changed #{@contact_to_edit}"
-        if detail_to_edit = 1
+        if detail_to_edit == "1"
           @contact_to_edit[:fname] = "#{change_to}"
-        elsif detail_to_edit = 2
+        elsif detail_to_edit == "2"
           @contact_to_edit[:sname] = "#{change_to}"
-        elsif detail_to_edit = 3
+        elsif detail_to_edit == "3"
           @contact_to_edit[:email_address] = "#{change_to}"
-        elsif detail_to_edit = 4
+        elsif detail_to_edit == "4"
           @contact_to_edit[:telephone] = "#{change_to}"
         end
 
@@ -80,8 +80,11 @@ class ManagePhonebook
       @load_data << @contact_to_edit
       p "This is the data to write #{@load_data}"
       File.write('./lib/contacts.json', @load_data.to_json)
+      edit_complete
+  end
 
-      return "\ncontact updated"
+  def edit_complete
+    return "\ncontact updated"
   end
 
   private # available within the class, but other classes can't see it

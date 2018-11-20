@@ -102,7 +102,7 @@ class ContactManager
     name_of_contact = gets.chomp
 
     @manage_phonebook.edit_which_detail(name_of_contact)
-    print @manage_phonebook.edit_which_detail(name_of_contact)
+    print @manage_phonebook.edit_complete
     print "\n"
     print use_the_phonebook()
   end

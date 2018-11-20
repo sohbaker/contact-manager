@@ -22,7 +22,7 @@ class ContactManager
       elsif @user_response == "2"
         option_edit()
       elsif @user_response == "3"
-        option_delete_a_contact()
+        option_delete_contact()
       elsif @user_response == "4"
         option_view_contacts()
       elsif @user_response == "5"
@@ -65,17 +65,17 @@ class ContactManager
         break if @is_valid_phone_no == true
       end
 
-    @manage_phonebook.add_to_phonebook(first_name, last_name, @email, @phone)
+    @manage_phonebook.add_a_new_contact(first_name, last_name, @email, @phone)
     print "contact added\n"
     print use_the_phonebook()
   end
 
-  def option_delete_a_contact
+  def option_delete_contact
     puts "What is the first name of the person whose details you like to delete?"
     delete = gets.chomp
 
-    @manage_phonebook.delete_contact(delete)
-    print @manage_phonebook.delete_contact(delete)
+    @manage_phonebook.delete_existing_contact(delete)
+    print @manage_phonebook.delete_existing_contact(delete)
     print "\n"
     print use_the_phonebook()
   end
@@ -83,8 +83,7 @@ class ContactManager
   def option_view_contacts
     print @manage_phonebook.alphabetise_contacts()
     print "\n"
-    # need a pause here before the screen clears, so that they can see the outcome
-    print clear_screen()
+    print use_the_phonebook()
   end
 
   def option_search
@@ -104,11 +103,6 @@ class ContactManager
     @manage_phonebook.edit_which_detail(name_of_contact)
     print @manage_phonebook.edit_complete
     print "\n"
-    print use_the_phonebook()
-  end
-
-  def clear_screen
-    system('clear')
     print use_the_phonebook()
   end
 

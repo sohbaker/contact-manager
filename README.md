@@ -16,7 +16,7 @@ Stretch Stretch Goals
 
 - Keep the UI static (i.e. experiment with clear screen to keep the UI in one place)
 - Make the UI more colourful
-- Edit contact details
-- Delete contact details - achieved
+- Edit the details of a contact - achieved
+- Delete a contact - achieved
 - Search as you type
 - Store and load the data using Postgres

@@ -26,7 +26,7 @@ class Person
       :fname => @first_name,
       :sname => @surname,
       :email_address => @email,
-      :telephone => @phonenumber
+      :mobile => @phonenumber
     }
   end
 

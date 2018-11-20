@@ -43,29 +43,45 @@ class ManagePhonebook
     return @find_contact.to_s
   end
 
-  def edit_contact(name_of_contact)
+  def edit_which_detail(name_of_contact)
     refresh_data
     load_JSON_file
 
-    @contact_to_edit_in_array = @contacts.find { |y| y[:fname] == "#{name_of_contact}"}
-    @contact_to_edit = @contact_to_edit_in_array[0]
-    @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+    @contact_to_edit = @contacts.find { |y| y[:fname] == "#{name_of_contact}"}
+    p "This is the hash #{@contact_to_edit}"
 
-    print "Please enter the detail you would like change as it reads now\n"
+    print "\nWould you like to edit their (1) first name, (2) surname, (3) email address or (4) mobile number?\n> "
     detail_to_edit = gets.chomp
-    print "What would you like to change it to?\n"
+    print "What would you like to change it to?\n> "
     change_to = gets.chomp
-    #  find a way to change a value in a hash
-    if value == "#{detail_to_edit}"
-      value = "#{change_to}"
-    end
 
-    @contact_to_edit[:"#{detail_to_edit}"] = "#{change_to}"
+    delete_previous_record = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+    File.write('./lib/contacts.json', delete_previous_record.to_json)
 
-    print @contact_to_edit
-    @load_data << @contact_to_edit
-    File.write('./lib/contacts.json', @load_data.to_json)
-    # print "\ncontact updated"
+    edit_contact(detail_to_edit,change_to)
+  end
+
+  def edit_contact(detail_to_edit, change_to)
+    refresh_data
+    load_JSON_file
+
+    p "This is the hash before the data is changed #{@contact_to_edit}"
+        if detail_to_edit = 1
+          @contact_to_edit[:fname] = "#{change_to}"
+        elsif detail_to_edit = 2
+          @contact_to_edit[:sname] = "#{change_to}"
+        elsif detail_to_edit = 3
+          @contact_to_edit[:email_address] = "#{change_to}"
+        elsif detail_to_edit = 4
+          @contact_to_edit[:telephone] = "#{change_to}"
+        end
+
+      p "This is the new hash #{@contact_to_edit}"
+      @load_data << @contact_to_edit
+      p "This is the data to write #{@load_data}"
+      File.write('./lib/contacts.json', @load_data.to_json)
+
+      return "\ncontact updated"
   end
 
   private # available within the class, but other classes can't see it

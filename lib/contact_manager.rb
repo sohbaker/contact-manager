@@ -13,7 +13,7 @@ class ContactManager
   end
 
   def use_the_phonebook
-    print "Would you like to: (1)add a contact, (2)edit a contact, (3)delete a contact, (4)view your contacts, (5)search, or (6)exit?\n> "
+    print "Would you like to: (1) add a contact, (2) edit a contact, (3) delete a contact, (4) view your contacts, (5) search, or (6) exit?\n> "
     @user_response = gets.chomp
 
     while user_exits_program() == false
@@ -101,8 +101,8 @@ class ContactManager
     puts "What is the first name of the person whose details you would like to change?\n"
     name_of_contact = gets.chomp
 
-    @manage_phonebook.edit_contact(name_of_contact)
-    print @manage_phonebook.edit_contact(name_of_contact)
+    @manage_phonebook.edit_which_detail(name_of_contact)
+    print @manage_phonebook.edit_which_detail(name_of_contact)
     print "\n"
     print use_the_phonebook()
   end

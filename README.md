@@ -14,8 +14,8 @@ Stretch Goals
 
 Stretch Stretch Goals
 
-- Keep the UI static (i.e. experiment with clear screen to keep the UI in one place)
-- Make the UI more colourful
+- Keep the UI static (i.e. experiment with clear screen to keep the UI in one place) - achieved
+- Make the UI more colourful - achieved
 - Edit the details of a contact - achieved
 - Delete a contact - achieved
 - Search as you type

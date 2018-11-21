@@ -4,6 +4,7 @@ class ManagePhonebook
   require 'json'
   require 'colorize'
   require 'colorized_string'
+  require 'awesome_print'
 
   attr_reader :json_data, :load_data
 
@@ -29,7 +30,7 @@ class ManagePhonebook
 
     File.write('./lib/contacts.json', @load_data.to_json)
     clear_screen
-    print "contact added\n".green
+    print "Contact added\n".green
   end
 
   def delete_existing_contact
@@ -39,24 +40,34 @@ class ManagePhonebook
 
     puts "What is the first name of the person whose details you like to delete?"
     name_of_contact = gets.chomp
-    @delete_the_contact = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+    @find_contact_to_delete = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+    clear_screen()
 
-    if @delete_the_contact != false
-      File.write('./lib/contacts.json', @delete_the_contact.to_json)
-      return "contact deleted\n".red # this part isn't printing , but the contact is being deleted
+    if @find_contact_to_delete != false
+
+      print "Contact deleted\n".red
+      File.write('./lib/contacts.json', @find_contact_to_delete.to_json)
     else
-      return "this person isn't in your phonebook"
+      return "This person: '#{name_of_contact}' isn\'t in your Contact Manager"
     end
-
-    clear_screen
   end
 
   def sort_contacts_alphabetically
     clear_screen
     read_JSON_file
-    @sorted_list = @contacts.sort_by { |fn, ln, em, ph| fn[:fname]}
-    print "Here are all the contacts in your Contact Manager:\n"
-    return @sorted_list
+    print "Would you like to sort your contacts by (1) first name, or (2) surname?\n> "
+    sort_first_or_last = gets.chomp
+
+    if sort_first_or_last == "1" || sort_first_or_last == "2"
+      print "Here are all the contacts in your Contact Manager:\n"
+      if sort_first_or_last == "1"
+        return ap @contacts.sort_by { |fn, ln, em, ph| fn[:fname]}
+      elsif sort_first_or_last == "2"
+        return ap @contacts.sort_by { |fn, ln, em, ph| fn[:sname]}
+      end
+    else
+      "Please select a valid option"
+    end
   end
 
   def search_phonebook
@@ -77,7 +88,7 @@ class ManagePhonebook
     @contact_to_edit = @contacts.find { |y| y[:fname] == "#{name_of_contact}"}
 
     if @contact_to_edit == nil
-      return "couldn't find that contact, please try again"
+      return "Couldn\'t find that contact, please try again"
     else
       print @contact_to_edit.to_s.red.on_white
       print "\nWould you like to edit their (1) first name, (2) surname, (3) email address or (4) mobile number?\n> "
@@ -100,19 +111,16 @@ class ManagePhonebook
         elsif detail_to_change == "2"
           @contact_to_edit[:sname] = "#{change_to}"
         elsif detail_to_change == "3"
-          @contact_to_edit[:email_address] = "#{change_to}"
+          @contact_to_edit[:email] = "#{change_to}"
         elsif detail_to_change == "4"
-          @contact_to_edit[:telephone] = "#{change_to}"
+          @contact_to_edit[:mobile] = "#{change_to}"
         end
 
       @load_data << @contact_to_edit
       File.write('./lib/contacts.json', @load_data.to_json)
-      edit_complete
-  end
 
-  def edit_complete
-    clear_screen
-    return "contact updated: #{@contact_to_edit}\n".green
+      clear_screen
+      return "Contact updated: #{@contact_to_edit}\n".green
   end
 
   private # available within the class, but other classes can't see it

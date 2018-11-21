@@ -2,6 +2,8 @@ class ManagePhonebook
   require 'person'
   require 'contact_manager'
   require 'json'
+  require 'colorize'
+  require 'colorized_string'
 
   attr_reader :contacts, :json_data, :find_contact, :store, :load_data
 
@@ -23,13 +25,13 @@ class ManagePhonebook
     refresh_data
     load_JSON_file
     @delete_the_contact = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+    print @delete_the_contact.to_s.red
     File.write('./lib/contacts.json', @delete_the_contact.to_json)
-    # returning "true" instead of "contact deleted"
-    if @delete_the_contact != false
-      "contact deleted"
-    else
-      "this person isn't in your phonebook"
-    end
+      if @delete_the_contact != false
+        return  "contact deleted".red
+      else
+        return "this person isn't in your phonebook"
+      end
     clear_screen
   end
 
@@ -38,14 +40,13 @@ class ManagePhonebook
     refresh_data
     @sorted_list = @contacts.sort_by { |fn, ln, em, ph| fn[:fname]}
     return @sorted_list
-    clear_screen
   end
 
   def search_phonebook(search_for)
+    clear_screen
     refresh_data
     @find_contact = @contacts.find_all { |y| y[:fname] == "#{search_for}"}
-    return @find_contact.to_s
-    clear_screen
+    return @find_contact.to_s.light_blue
   end
 
   def edit_which_detail(name_of_contact)
@@ -53,6 +54,8 @@ class ManagePhonebook
     refresh_data
     load_JSON_file
     @contact_to_edit = @contacts.find { |y| y[:fname] == "#{name_of_contact}"}
+    print @contact_to_edit.to_s.black.on_yellow
+
 
     print "\nWould you like to edit their (1) first name, (2) surname, (3) email address or (4) mobile number?\n> "
     detail_to_change = gets.chomp
@@ -68,7 +71,6 @@ class ManagePhonebook
   def edit_contact(detail_to_change, change_to)
     refresh_data
     load_JSON_file
-
         if detail_to_change == "1"
           @contact_to_edit[:fname] = "#{change_to}"
         elsif detail_to_change == "2"
@@ -86,7 +88,7 @@ class ManagePhonebook
 
   def edit_complete
     clear_screen
-    return "\ncontact updated"
+    return "\ncontact updated".green
   end
 
   private # available within the class, but other classes can't see it

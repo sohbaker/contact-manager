@@ -1,5 +1,6 @@
 class ContactManager
   require 'manage_phonebook'
+  require 'colorize'
 
   attr_reader :options_menu, :phonebook, :email, :phone, :manage_phonebook
 
@@ -13,7 +14,7 @@ class ContactManager
   end
 
   def use_the_phonebook
-    print "Would you like to: (1) add a contact, (2) edit a contact, (3) delete a contact, (4) view your contacts, (5) search, or (6) exit?\n> "
+    print "Would you like to: (1) add a contact, (2) edit a contact, (3) delete a contact, (4) view your contacts, (5) search, or (6) exit?\n> ".magenta.on_blue
     @user_response = gets.chomp
 
     while user_exits_program() == false
@@ -66,7 +67,7 @@ class ContactManager
       end
 
     @manage_phonebook.add_a_new_contact(first_name, last_name, @email, @phone)
-    print "contact added\n"
+    print "contact added\n".green
     print use_the_phonebook()
   end
 

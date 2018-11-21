@@ -8,19 +8,6 @@ class Person
     @phonenumber = phonenumber
   end
 
-  def add_name(first_name, last_name)
-    @first_name = first_name
-    @surname = last_name
-  end
-
-  def add_email(new_email)
-    @email = new_email
-  end
-
-  def add_phone(new_number)
-    @phonenumber = new_number
-  end
-
   def phonebook_entry
     {
       :fname => @first_name,

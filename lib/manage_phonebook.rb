@@ -30,7 +30,7 @@ class ManagePhonebook
 
     File.write('./lib/contacts.json', @load_data.to_json)
     clear_screen
-    print "Contact added\n".green
+    print "Contact added: #{new_person.phonebook_entry}\n".green
   end
 
   def delete_existing_contact
@@ -40,13 +40,19 @@ class ManagePhonebook
 
     puts "What is the first name of the person whose details you like to delete?"
     name_of_contact = gets.chomp
-    @find_contact_to_delete = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+    @find_contact_to_delete = @contacts.find_all { |y| y[:fname] == "#{name_of_contact}"}
     clear_screen()
 
-    if @find_contact_to_delete != false
-
-      print "Contact deleted\n".red
-      File.write('./lib/contacts.json', @find_contact_to_delete.to_json)
+    if @find_contact_to_delete.count >= 1
+      print "Are you sure you want to delete: #{@find_contact_to_delete}? (1) Yes or (2) No\n> ".on_red
+      delete_check = gets.chomp
+      if delete_check == "1"
+        delete = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
+        print "Contact deleted\n".red
+        File.write('./lib/contacts.json', delete.to_json)
+      elsif delete_check == "2"
+        print "returning to main menu"
+      end
     else
       return "This person: '#{name_of_contact}' isn\'t in your Contact Manager"
     end
@@ -76,7 +82,7 @@ class ManagePhonebook
     search_for = gets.chomp
     read_JSON_file
     @find_contact = @contacts.find_all { |y| y[:fname] == "#{search_for}"}
-    return @find_contact.to_s.green.on_white
+    return @find_contact.to_s.on_green
   end
 
   def edit_which_detail

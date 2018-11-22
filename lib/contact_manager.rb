@@ -51,17 +51,17 @@ class ContactManager
   end
 
   def option_view_contacts
-    print @manage_phonebook.sort_contacts_alphabetically()
+    @manage_phonebook.sort_contacts_alphabetically()
     program_options()
   end
 
   def option_search
-    print @manage_phonebook.search_phonebook()
+    @manage_phonebook.search_phonebook()
     program_options()
   end
 
   def option_edit_contact
-    print @manage_phonebook.edit_which_detail()
+    @manage_phonebook.edit_which_detail()
     program_options()
   end
 

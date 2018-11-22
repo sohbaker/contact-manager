@@ -12,6 +12,14 @@ class ManagePhonebook
     read_JSON_file
   end
 
+  def greeting_message
+    print "Welcome to your Contact Manager, a command line program which allows you to store, search and view your contacts.\nYou can choose to:\n\u2460 add a new contact\n\u2461 edit a contact's details \n\u2462 delete a contact \n\u2463 view all your contacts, listed alphabetically \n\u2464 search for a contact, or \n\u2465 exit this program\n"
+  end
+
+  def display_options
+    print "\nWould you like to: (1) add a contact, (2) edit a contact, (3) delete a contact, (4) view your contacts, (5) search, or (6) exit?\n> ".magenta.on_blue
+  end
+
   def add_a_new_contact
     read_JSON_file
     load_JSON_file
@@ -44,7 +52,7 @@ class ManagePhonebook
     clear_screen()
 
     if @find_contact_to_delete.count >= 1
-      print "Are you sure you want to delete: #{@find_contact_to_delete}? (1) Yes or (2) No\n> ".on_red
+      print "Are you sure you want to delete: #{@find_contact_to_delete}?\n(1) Yes or (2) No\n> ".on_red
       delete_check = gets.chomp
       if delete_check == "1"
         delete = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
@@ -127,6 +135,10 @@ class ManagePhonebook
 
       clear_screen
       return "Contact updated: #{@contact_to_edit}\n".green
+  end
+
+  def closing_message
+    print "Thanks for using Contact Manager\n".blue.on_green.blink
   end
 
   private # available within the class, but other classes can't see it

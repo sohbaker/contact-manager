@@ -9,12 +9,12 @@ class ContactManager
   end
 
   def greet_user
-    print "Welcome to your Contact Manager, a command line program which allows you to store, search and view your contacts.\nYou can choose to:\n\u2460 add a new contact\n\u2461 edit a contact's details \n\u2462 delete a contact \n\u2463 view all your contacts, listed alphabetically \n\u2464 search for a contact, or \n\u2465 exit this program\n"
+    @manage_phonebook.greeting_message
     program_options()
   end
 
   def program_options
-    print "\nWould you like to: (1) add a contact, (2) edit a contact, (3) delete a contact, (4) view your contacts, (5) search, or (6) exit?\n> ".magenta.on_blue
+    @manage_phonebook.display_options
     @user_response = gets.chomp
 
     while user_exits_program() == false
@@ -35,7 +35,7 @@ class ContactManager
     end
 
     if user_exits_program() == true
-      print "Thanks for using the Contact Manager\n".blue.on_green.blink
+      @manage_phonebook.closing_message
       exit(0)
     end
   end

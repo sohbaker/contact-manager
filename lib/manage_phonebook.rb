@@ -50,17 +50,17 @@ class ManagePhonebook
 
     @print_to_console.display("What is the first name of the person whose details you like to delete?\n> ")
     name_of_contact = gets.chomp
-    @find_contact_to_delete = @contacts.find_all { |y| y[:fname] == "#{name_of_contact}"}
+    @contact_to_delete = @contacts.find_all { |y| y[:fname] == "#{name_of_contact}"}
     clear_screen()
 
-    if @find_contact_to_delete.count >= 1
-      @print_to_console.display("Are you sure you want to delete: #{@find_contact_to_delete}?\n(1) Yes or (2) No\n> ".on_red)
-      delete_check = gets.chomp
-      if delete_check == "1"
+    if @contact_to_delete.count >= 1
+      @print_to_console.display("Are you sure you want to delete: #{@contact_to_delete}?\n(1) Yes or (2) No\n> ".on_red)
+      confirm_delete = gets.chomp
+      if confirm_delete == "1"
         delete = @contacts.delete_if { |fn, ln, em, p| fn[:fname] == "#{name_of_contact}"}
         @print_to_console.display("Contact deleted\n".red)
         File.write('./lib/contacts.json', delete.to_json)
-      elsif delete_check == "2"
+      elsif confirm_delete == "2"
         @print_to_console.display("returning to main menu")
       end
     else

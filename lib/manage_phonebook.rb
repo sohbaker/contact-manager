@@ -6,6 +6,7 @@ class ManagePhonebook
   require 'colorized_string'
   require 'awesome_print'
   require 'display'
+  require 'pg'
 
   attr_reader :json_data, :load_data
 
@@ -93,9 +94,10 @@ class ManagePhonebook
     read_JSON_file
     @find_contact = @contacts.find_all { |y| y[:fname] == "#{search_for}"}
     if @find_contact.length >= 1
-      return @find_contact.to_s.on_green
+      clear_screen()
+      @print_to_console.display(@find_contact.to_s.on_green)
     else
-      return @print_to_console.display("This person: '#{search_for}' isn\'t in your Contact Manager\n".red)
+      @print_to_console.display("This person: '#{search_for}' isn\'t in your Contact Manager\n".red)
     end
   end
 
@@ -110,7 +112,7 @@ class ManagePhonebook
     if @contact_to_edit == nil
       return "Couldn\'t find that contact, please try again\n"
     else
-      @print_to_console.display(@contact_to_edit.to_s.red.on_white)
+      @print_to_console.display(@contact_to_edit.to_s.red)
       @print_to_console.display("\nWould you like to edit their (1) first name, (2) surname, (3) email address or (4) mobile number?\n> ")
       detail_to_change = gets.chomp
       @print_to_console.display("What would you like to change it to?\n> ")
@@ -136,11 +138,10 @@ class ManagePhonebook
           @contact_to_edit[:mobile] = "#{change_to}"
         end
 
+      clear_screen
+      @print_to_console.display("Contact updated: #{@contact_to_edit}\n".green)
       @load_data << @contact_to_edit
       File.write('./lib/contacts.json', @load_data.to_json)
-
-      clear_screen
-      return "Contact updated: #{@contact_to_edit}\n".green
   end
 
   def closing_message

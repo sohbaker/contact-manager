@@ -5,16 +5,16 @@ Core features
 
 [x] User should be able to enter a contact (name, email, phonenumber)
 [x] User should be able to see a list of all of their contacts in alphabetical order
-  - can sort by first name
-  - can sort by last name
+    - can sort by first name
+    - can sort by last name
 [x] User should be able to search for a contact by name and view their details  
-  - can search by first name
+    - can search by first name
 
 Stretch Goals
 
 [x] Save the contacts to a file
 [x] Load the contacts from that file when restarting the program
-  - done using JSON file
+    - done using JSON file
 
 Stretch Stretch Goals
 

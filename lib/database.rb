@@ -1,8 +1,15 @@
+require 'pg'
+
 class Database
 
   def initialize
-  end
+    conn = PG.connect(
+      dbname: 'postgres',
+      host: 'localhost',
+      user: 'postgres',
+      password: 'dataadmin')
+    results = conn.exec("SELECT * FROM fruits")
 
-  def method
+    puts results.getvalue(0,0)
   end
 end
